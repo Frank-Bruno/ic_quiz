@@ -1,0 +1,145 @@
+{% extends "layout.html" %}
+{% block title %}Entrar no Jogo{% endblock %}
+
+{% block content %}
+<div id="join-view">
+    <h1>Entrar no Jogo</h1>
+    <input type="text" id="nickname-input" placeholder="Seu apelido">
+    <br>
+    <button id="join-btn">Entrar</button>
+</div>
+
+<div id="wait-view" style="display: none;">
+    <h2>Olá, <span id="nickname-display"></span>!</h2>
+    <p>Aguarde o professor iniciar o jogo...</p>
+</div>
+
+<div id="question-view" style="display: none;">
+    <h3 id="question-text">Texto da Pergunta</h3>
+    <div id="options-grid" class="grid-options">
+    </div>
+</div>
+
+<div id="result-view" style="display: none;">
+    <h2 id="result-text">Aguardando próxima pergunta...</h2>
+    <p>Seu placar: <strong id="score-display">0</strong></p>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const joinView = document.getElementById('join-view');
+    const waitView = document.getElementById('wait-view');
+    const questionView = document.getElementById('question-view');
+    const resultView = document.getElementById('result-view');
+
+    const nicknameInput = document.getElementById('nickname-input');
+    const nicknameDisplay = document.getElementById('nickname-display');
+    const optionsGrid = document.getElementById('options-grid');
+    const questionTextEl = document.getElementById('question-text');
+    const resultTextEl = document.getElementById('result-text');
+    const scoreDisplayEl = document.getElementById('score-display');
+
+    let myLastAnswerIndex = null;
+
+    let mySid = null;
+
+    socket.on('connect', () => {
+        mySid = socket.id;
+    });
+
+    // Entrar no Jogo
+    document.getElementById('join-btn').addEventListener('click', () => {
+        const nickname = nicknameInput.value;
+        if (nickname) {
+            socket.emit('player_join', { 'nickname': nickname });
+        }
+    });
+
+    // Servidor confirmou a entrada
+    socket.on('join_success', (data) => {
+        joinView.style.display = 'none';
+        waitView.style.display = 'block';
+        nicknameDisplay.textContent = data.nickname;
+    });
+
+    // Servidor enviou uma pergunta
+    socket.on('show_question', (data) => {
+        waitView.style.display = 'none';
+        resultView.style.display = 'none';
+        questionView.style.display = 'block';
+
+        questionTextEl.textContent = data.text;
+        optionsGrid.innerHTML = '';
+
+        data.options.forEach((option, index) => {
+            const btn = document.createElement('button');
+            btn.textContent = option;
+            btn.classList.add('option-btn');
+            btn.dataset.index = index;
+
+            btn.addEventListener('click', () => {
+                // Envia a resposta
+                socket.emit('submit_answer', { 'option_index': index });
+
+                // --- ALTERAÇÃO AQUI ---
+                myLastAnswerIndex = index.toString(); // Salva a resposta clicada
+
+                // Desabilita todos os botões e marca a selecionada
+                optionsGrid.querySelectorAll('button').forEach(b => b.disabled = true);
+                btn.style.backgroundColor = '#007bff';
+                btn.style.color = 'white';
+            });
+            optionsGrid.appendChild(btn);
+        });
+    });
+
+    // Servidor confirmou o recebimento da resposta
+    socket.on('answer_received', () => {
+        questionView.style.display = 'none';
+        resultView.style.display = 'block';
+        resultTextEl.textContent = 'Resposta recebida! Aguardando resultados...';
+    });
+
+    // Servidor enviou os resultados
+    socket.on('show_results', (data) => {
+        questionView.style.display = 'none';
+        resultView.style.display = 'block';
+
+        const myScore = data.scores[mySid] || 0;
+        scoreDisplayEl.textContent = myScore;
+
+        // Pega a resposta correta (como string)
+        const correctOptionIndex = data.correct_option.toString();
+
+        // --- INÍCIO DA LÓGICA CORRIGIDA ---
+        if (myLastAnswerIndex !== null) {
+            // Compara a resposta que salvamos (string) com a correta (string)
+            if (myLastAnswerIndex === correctOptionIndex) {
+                resultTextEl.textContent = 'Você Acertou!';
+            } else {
+                resultTextEl.textContent = 'Você Errou!';
+            }
+        } else {
+            resultTextEl.textContent = 'Você não respondeu a tempo!';
+        }
+
+        // Limpa a variável para a próxima pergunta
+        myLastAnswerIndex = null;
+        // --- FIM DA LÓGICA CORRIGIDA ---
+    });
+
+    socket.on('game_over', (scores) => {
+        questionView.style.display = 'none';
+        resultView.style.display = 'block';
+        resultTextEl.textContent = 'O JOGO TERMINOU! Obrigado por jogar.';
+        scoreDisplayEl.textContent = scores[mySid] || 0;
+    });
+
+    socket.on('game_reset', () => {
+        alert("O anfitrião saiu. O jogo será reiniciado.");
+        window.location.reload();
+    });
+
+</script>
+{% endblock %}

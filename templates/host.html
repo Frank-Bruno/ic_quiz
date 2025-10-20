@@ -1,0 +1,176 @@
+{% extends "layout.html" %}
+{% block title %}(Host) {{ quiz_title }}{% endblock %}
+
+{% block content %}
+<div id="lobby">
+    <h1>{{ quiz_title }}</h1>
+    <h2>Aguardando jogadores...</h2>
+    <p>(Peça para os alunos acessarem: <strong>http://[SEU_IP]:5000</strong>)</p>
+
+    <ul id="player-list" class="player-list">
+    </ul>
+
+    <button id="start-game-btn" disabled>Iniciar Jogo (0 Jogadores)</button>
+</div>
+
+<div id="question-view" style="display: none;">
+    <h3 id="question-text">Texto da Pergunta</h3>
+    <p>Respostas recebidas: <span id="answer-count">0</span> / <span id="total-players">0</span></p>
+    <button id="show-results-btn">Mostrar Resultados</button>
+</div>
+
+<div id="results-view" style="display: none;">
+    <h3>Resultados</h3>
+    <p>A resposta correta era: <strong id="correct-answer-text"></strong></p>
+    <h4>Placar:</h4>
+    <ul id="score-list" class="player-list">
+    </ul>
+    <button id="next-question-btn">Próxima Pergunta</button>
+</div>
+
+<div id="game-over-view" style="display: none;">
+    <h1>Fim do Quiz!</h1>
+    <h4>Placar Final:</h4>
+    <ul id="final-score-list" class="player-list">
+    </ul>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const startBtn = document.getElementById('start-game-btn');
+    const playerListEl = document.getElementById('player-list');
+
+    const lobbyView = document.getElementById('lobby');
+    const questionView = document.getElementById('question-view');
+    const resultsView = document.getElementById('results-view');
+    const gameOverView = document.getElementById('game-over-view');
+
+    const questionTextEl = document.getElementById('question-text');
+    const answerCountEl = document.getElementById('answer-count');
+    const totalPlayersEl = document.getElementById('total-players');
+
+    const correctTextEl = document.getElementById('correct-answer-text');
+    const scoreListEl = document.getElementById('score-list');
+    const finalScoreListEl = document.getElementById('final-score-list');
+
+    // Avisa o servidor que esta é a tela do host
+    socket.emit('host_join');
+
+    // Atualiza a lista de jogadores no lobby
+    socket.on('update_player_list', (players) => {
+        playerListEl.innerHTML = '';
+        players.forEach(name => {
+            const li = document.createElement('li');
+            li.textContent = name;
+            playerListEl.appendChild(li);
+        });
+        startBtn.textContent = `Iniciar Jogo (${players.length} Jogadores)`;
+        startBtn.disabled = players.length === 0;
+    });
+
+    // Iniciar Jogo
+    startBtn.addEventListener('click', () => {
+        socket.emit('start_game');
+    });
+
+    // Mostra a pergunta
+    socket.on('show_question', (data) => {
+        lobbyView.style.display = 'none';
+        resultsView.style.display = 'none';
+        questionView.style.display = 'block';
+
+        questionTextEl.textContent = `(${data.question_index + 1}/${data.total_questions}) ${data.text}`;
+    });
+
+    // Atualiza a contagem de respostas
+    socket.on('update_answer_count', (data) => {
+        answerCountEl.textContent = data.answered;
+        totalPlayersEl.textContent = data.total;
+    });
+
+    // Botão de Mostrar Resultados
+    document.getElementById('show-results-btn').addEventListener('click', () => {
+        socket.emit('show_results');
+    });
+
+    // Mostra os resultados da pergunta
+    socket.on('show_results', (data) => {
+        questionView.style.display = 'none';
+        resultsView.style.display = 'block';
+
+        correctTextEl.textContent = data.correct_option_text;
+
+        // `data` contém: correct_option, scores, players
+        // Vamos atualizar o placar
+        scoreListEl.innerHTML = '';
+        const sortedPlayers = Object.keys(data.players).sort((a, b) => data.scores[b] - data.scores[a]);
+
+        sortedPlayers.forEach(sid => {
+            const li = document.createElement('li');
+            li.textContent = `${data.players[sid]}: ${data.scores[sid]} pontos`;
+            scoreListEl.appendChild(li);
+        });
+    });
+
+    // Botão de Próxima Pergunta
+    document.getElementById('next-question-btn').addEventListener('click', () => {
+        socket.emit('next_question');
+    });
+
+    // Fim de jogo
+    socket.on('game_over', (leaderboard) => { // Recebe o placar ordenado
+        resultsView.style.display = 'none';
+        gameOverView.style.display = 'block';
+
+        finalScoreListEl.innerHTML = '';
+
+        // --- INÍCIO DA LÓGICA DO PÓDIO ---
+
+        // Pega apenas os 3 primeiros
+        const top3 = leaderboard.slice(0, 3);
+
+        // Emojis de medalha
+        const medals = ['🥇', '🥈', '🥉'];
+
+        top3.forEach((player, index) => {
+            const li = document.createElement('li');
+            li.textContent = `${medals[index] || ''} ${player.nickname}: ${player.score} pontos`;
+
+            // Adiciona um estilo sutil para os vencedores
+            if (index === 0) {
+                li.style.fontWeight = 'bold';
+                li.style.fontSize = '1.2em';
+                li.style.backgroundColor = '#fff3cd'; // Cor de ouro claro
+            }
+            if (index === 1) {
+                li.style.backgroundColor = '#e2e3e5'; // Cor de prata claro
+            }
+            if (index === 2) {
+                li.style.backgroundColor = '#ffe8cc'; // Cor de bronze claro
+            }
+
+            finalScoreListEl.appendChild(li);
+        });
+
+        // Mensagem se ninguém jogou
+        if (leaderboard.length === 0) {
+            const li = document.createElement('li');
+            li.textContent = 'Nenhum jogador participou.';
+            finalScoreListEl.appendChild(li);
+        }
+    });
+
+    // Alguém saiu
+    socket.on('player_left', (data) => {
+        // Apenas recarrega a lista de jogadores (a lógica completa está no servidor)
+        socket.emit('host_join');
+    });
+
+    socket.on('game_reset', () => {
+        alert("O Jogo foi resetado!");
+        window.location.reload();
+    });
+
+</script>
+{% endblock %}
