@@ -1,225 +1,305 @@
 {
-    "title": "AI and ML Concepts Quiz (Extended)",
+    "title": "Quiz de Conceitos de ML (Capítulo 2 - Géron)",
     "questions": [
         {
-            "text": "NumPy array vs pandas DataFrame",
+            "text": "Qual é a principal distinção funcional entre um objeto *NumPy array* e um *pandas DataFrame* no contexto do pré-processamento de dados em Python?",
             "options": [
-                "A DataFrame has labeled axes (index and columns) and can hold heterogeneous data, while a NumPy array is indexed by integers and is optimized for homogeneous data.",
-                "A NumPy array is a 2D labeled structure, while a DataFrame is an N-dimensional array for numerical data.",
-                "NumPy is a high-level data analysis library, while Pandas is a low-level library for numerical computation.",
-                "DataFrames are faster than NumPy arrays for all mathematical operations."
+                "O DataFrame pode conter dados heterogêneos e usa eixos rotulados (nomes de colunas/índice), enquanto o NumPy é homogêneo e indexado numericamente.",
+                "NumPy é uma biblioteca de alto nível para análise de dados, enquanto Pandas é de baixo nível para computação numérica.",
+                "O DataFrame é exclusivamente para atributos numéricos e o NumPy para atributos categóricos.",
+                "NumPy é mais rápido que Pandas em todas as etapas, incluindo o carregamento de arquivos CSV."
             ],
             "correct_option": 0
         },
         {
-            "text": "What is a ML pipeline? Cite two examples of ML pipelines.",
+            "text": "O que é um *ML pipeline* (pipeline de Machine Learning)?",
             "options": [
-                "It's a single algorithm like a neural network. Examples: Logistic Regression and K-Means.",
-                "It's an automated workflow of ML steps. Examples: (1) A text classification pipeline (text cleaning -> vectorization -> model training) and (2) An image processing pipeline (image augmentation -> feature scaling -> CNN training).",
-                "It's a database for storing data. Examples: MySQL and PostgreSQL.",
-                "It's a visualization dashboard. Examples: Tableau and PowerBI."
+                "Um método de avaliação de modelo utilizando Validação Cruzada.",
+                "Uma sequência de componentes de processamento de dados que consomem a saída do anterior, permitindo manipulação e transformação de dados.",
+                "O modelo final treinado (Estimator) pronto para fazer predições.",
+                "Um arquivo único para armazenar grandes conjuntos de dados (como CSV ou TGZ)."
             ],
             "correct_option": 1
         },
         {
-            "text": "supervised vs unsupervised",
+            "text": "Qual é a principal diferença entre a aprendizagem Supervisionada (*Supervised Learning*) e a Não Supervisionada (*Unsupervised Learning*)?",
             "options": [
-                "Supervised learning is for regression, while unsupervised learning is for classification.",
-                "Supervised learning finds clusters in data, while unsupervised learning predicts a continuous value.",
-                "Supervised learning requires a human to 'supervise' the model as it trains, while unsupervised learning runs completely automatically.",
-                "Supervised learning uses labeled data (input-output pairs) to make predictions, while unsupervised learning finds hidden patterns in unlabeled data."
+                "Supervised Learning usa algoritmos que exigem o treinamento em instâncias não rotuladas (sem $y$).",
+                "Unsupervised Learning prevê um valor contínuo, enquanto Supervised Learning faz classificação.",
+                "Supervised Learning treina o sistema com exemplos rotulados (pares de entrada $x$ e saída desejada $y$).",
+                "Unsupervised Learning é usado exclusivamente para problemas de Regressão."
             ],
-            "correct_option": 3
+            "correct_option": 2
         },
         {
-            "text": "multiple regression vs univariate regression vs multivariate regression",
+            "text": "No contexto de Regressão, qual tipo de problema é definido como *Multiple Regression* (Regressão Múltipla)?",
             "options": [
-                "**Univariate** predicts one output from one input. **Multiple** predicts one output from many inputs. **Multivariate** predicts many outputs from many inputs.",
-                "**Univariate** predicts one output from one input. **Multiple** predicts many outputs from one input. **Multivariate** predicts many outputs from many inputs.",
-                "**Univariate** predicts many outputs from one input. **Multiple** predicts one output from many inputs. **Multivariate** predicts one output from one input.",
-                "**Univariate** predicts one output from many inputs. **Multiple** predicts one output from one input. **Multivariate** predicts many outputs from many inputs."
+                "Prever um único valor de saída, mas usando múltiplos atributos (*features*) de entrada.",
+                "Prever múltiplos valores de saída simultaneamente.",
+                "Prever um único valor de saída, usando apenas um único atributo (Univariate).",
+                "Um problema de Classificação com mais de dez classes."
             ],
             "correct_option": 0
         },
         {
-            "text": "batch learning vs online learning",
+            "text": "Quando um *dataset* é muito grande e não cabe na memória, qual abordagem de treinamento é a mais recomendada, além da divisão do trabalho em vários servidores (e.g., MapReduce)?",
             "options": [
-                "Batch learning trains the model incrementally on single data instances, while online learning trains on the entire dataset at once.",
-                "Batch learning (or offline learning) trains on the entire available dataset at once, while online learning trains incrementally on mini-batches or single instances.",
-                "Batch learning is only suitable for small datasets, while online learning is required for all large datasets.",
-                "Online learning models cannot be updated after initial training, while batch learning models can."
-            ],
-            "correct_option": 1
-        },
-        {
-            "text": "Are all datasets small enough to fit in memory? Which learning method should be used if the dataset does not fit?",
-            "options": [
-                "Yes, all modern datasets fit in memory thanks to compression. Batch learning is always preferred.",
-                "No, many datasets are too large for memory. Batch learning is used in this case by loading chunks of data.",
-                "No, many datasets (e.g., 'big data') do not fit in memory. Online learning is well-suited for this, as it processes data incrementally.",
-                "Yes, datasets are designed to fit in memory. If one doesn't, you must use a more powerful computer, as online learning is only for real-time data."
-            ],
-            "correct_option": 2
-        },
-        {
-            "text": "Distinction between norms vs distances vs loss functions",
-            "options": [
-                "A norm measures distance, a distance is a type of loss function, and a loss function is a norm.",
-                "A norm is a loss function, a distance is a metric, and a loss function is always a norm.",
-                "A norm measures vector magnitude (e.g., L2). A distance measures separation between two points (e.g., Euclidean). A loss function quantifies model error (e.g., MSE), and can be based on a norm or distance.",
-                "A norm, a distance, and a loss function are all synonyms for measuring error in a machine learning model."
-            ],
-            "correct_option": 2
-        },
-        {
-            "text": "Explain how a Jupyter notebook works and differences with a Python script",
-            "options": [
-                "A Jupyter notebook is a single file executed from top to bottom, just like a .py script, but it runs in a web browser.",
-                "A Python script is interactive and allows for rich media (plots, text), while a Jupyter notebook is a plain-text file for non-interactive execution.",
-                "Jupyter notebooks are compiled to machine code, making them faster than .py scripts, which are interpreted.",
-                "A notebook is an interactive environment (web-based) that runs code in a kernel, allowing code, text, and plots in 'cells'. A .py script is a plain-text file typically executed non-interactively from the command line."
+                "Exclusivamente *Batch Learning*.",
+                "Apagar atributos que possuem muitos valores nulos.",
+                "Amostragem Estratificada para reduzir o tamanho.",
+                "Utilizar *Online Learning* (ou *Incremental Learning*), processando os dados em pequenas partes."
             ],
             "correct_option": 3
         },
         {
-            "text": "What is the tgz file extension. Explain command tar xzf housing.tgz",
+            "text": "Qual é a principal característica da aprendizagem em lote (*Batch Learning*)?",
             "options": [
-                ".tgz is a Gzipped Tarball (a compressed archive). The command eXtracts (x) the files from the arZchive (z) specified in the File (f) 'housing.tgz', decompressing it.",
-                ".tgz is a text file. The command 'tar xzf' is a text-editing command to 'eXamine text file' (xtf).",
-                ".tgz is a Gzipped executable. The command 'tar xzf' eXecutes (x) the Zipped File (f).",
-                ".tgz is a video file. The command 'tar xf' eXtracts (x) Zoomed (z) Frames (f) from the video."
+                "O sistema é treinado de forma incremental, adaptando-se a dados novos rapidamente.",
+                "O sistema é treinado usando todos os dados disponíveis de uma vez, geralmente *offline*.",
+                "O sistema utiliza apenas uma pequena amostra do conjunto de dados total.",
+                "O sistema precisa estar conectado à internet em tempo real."
+            ],
+            "correct_option": 1
+        },
+        {
+            "text": "Qual a relação entre o *Root Mean Square Error* (RMSE) e o conceito de Norma Euclidiana?",
+            "options": [
+                "RMSE é a média aritmética do vetor de erros.",
+                "RMSE é a norma $\\ell_1$ (distância de Manhattan).",
+                "O RMSE corresponde à norma Euclidiana do vetor de erros.",
+                "O RMSE é usado apenas em problemas de Classificação."
+            ],
+            "correct_option": 2
+        },
+        {
+            "text": "Qual é a principal vantagem de usar um *Jupyter Notebook* ou Google Colab em comparação com um script Python simples para o desenvolvimento e visualização de projetos de ML?",
+            "options": [
+                "Permite o uso de bibliotecas de terceiros como o Scikit-Learn.",
+                "É mais seguro para armazenar credenciais de acesso a dados.",
+                "Jupyter permite a interatividade, execução célula por célula e a mistura de código com texto e figuras (como Markdown).",
+                "Scripts Python não podem ser executados no navegador."
+            ],
+            "correct_option": 2
+        },
+        {
+            "text": "Qual é o significado da extensão de arquivo `.tgz` mencionada no processo de obtenção de dados e o que faz o comando `tar xzf`?",
+            "options": [
+                "Um arquivo de texto simples (TXT).",
+                "Um arquivo de vídeo compactado (MPEG).",
+                "Um arquivo de log (LOG).",
+                "Um arquivo compactado (*tar gzipped archive*), e `tar xzf` o extrai (eXtracts)."
+            ],
+            "correct_option": 3
+        },
+        {
+            "text": "O que significa o acrônimo CSV e qual a sua principal aplicação?",
+            "options": [
+                "Computed Statistics Vector.",
+                "Consolidated System Version.",
+                "Comma-Separated Values (Valores Separados por Vírgula), usado para dados tabulares.",
+                "Categorical Scaling Vector."
+            ],
+            "correct_option": 2
+        },
+        {
+            "text": "Em um contexto de ML supervisionado (dado $(x, y)$), o que representam a *instância* (ou exemplo) e o *label* (rótulo)?",
+            "options": [
+                "A instância é a predição $h(x)$, e o label é a função de custo.",
+                "A instância é o vetor de *features* x, e o label é o valor de saída desejado y.",
+                "A instância é o parâmetro do modelo, e o label é o erro.",
+                "A instância é a dispersão, e o label é a média."
+            ],
+            "correct_option": 1
+        },
+        {
+            "text": "Qual a relação entre *std* (*standard deviation* - desvio padrão) e *variance* (variância) em estatística descritiva de atributos numéricos?",
+            "options": [
+                "O desvio padrão é o quadrado da variância.",
+                "A variância é a raiz cúbica do desvio padrão.",
+                "A variância mede a dispersão, enquanto o desvio padrão é a raiz quadrada da variância.",
+                "Ambos medem a centralidade dos dados, como a média."
+            ],
+            "correct_option": 2
+        },
+        {
+            "text": "O que representam os valores do 25º percentil (*first quartile*) e do 75º percentil (*third quartile*) ao descrever um atributo numérico?",
+            "options": [
+                "Apenas os valores mínimos e máximos do atributo.",
+                "Os pontos que dividem o conjunto de dados em subgrupos homogêneos.",
+                "Os valores abaixo dos quais 25% e 75% das observações se encontram, respectivamente.",
+                "A média e a mediana do atributo."
+            ],
+            "correct_option": 2
+        },
+        {
+            "text": "Por que o uso da função `plt.show()` pode ser opcional em um *Jupyter Notebook*, mas é frequentemente necessário em um script Python regular?",
+            "options": [
+                "Jupyter ignora o código Matplotlib e usa outro motor de renderização.",
+                "Jupyter (ou Colab) automaticamente exibe os gráficos quando a célula é executada.",
+                "Scripts Python não podem renderizar gráficos de dispersão.",
+                "A função `show()` é reservada apenas para modelos treinados."
+            ],
+            "correct_option": 1
+        },
+        {
+            "text": "No contexto da distribuição de atributos, o que caracteriza uma distribuição *tail-heavy* (cauda pesada) e qual a implicação para o pré-processamento?",
+            "options": [
+                "A distribuição é perfeitamente simétrica (bell-shaped).",
+                "A distribuição é uniforme entre zero e um.",
+                "Possui caudas longas, afetada por *outliers* (valores atípicos), e pode exigir transformação (e.g., log) para se tornar mais simétrica.",
+                "É uma distribuição esparsa (Sparse)."
+            ],
+            "correct_option": 2
+        },
+        {
+            "text": "Explique detalhadamente o que é o *data snooping bias* (viés de bisbilhotice de dados).",
+            "options": [
+                "Ocorre quando o modelo é treinado de forma incremental (online).",
+                "Ocorre quando a divisão dos dados não é aleatória.",
+                "Ocorre quando a estimativa de erro de generalização se torna otimista por usar o conjunto de teste inadvertidamente.",
+                "É a tendência do modelo em prever valores nulos."
+            ],
+            "correct_option": 2
+        },
+        {
+            "text": "Qual é a função do *random number generator's seed* ao dividir um conjunto de dados em treino e teste (e.g., em Scikit-Learn)?",
+            "options": [
+                "Determinar a taxa de aprendizado do modelo.",
+                "Garantir que os dados sejam sempre padronizados (Standardization).",
+                "Assegurar que a divisão aleatória dos dados seja a mesma em execuções subsequentes (reprodutibilidade).",
+                "Inicializar os pesos de uma Rede Neural."
+            ],
+            "correct_option": 2
+        },
+        {
+            "text": "O que é *stratified sampling* (amostragem estratificada) e qual seu objetivo principal na divisão de conjuntos de dados?",
+            "options": [
+                "Dividir aleatoriamente a população sem considerar a distribuição de atributos.",
+                "Dividir a população em subgrupos homogêneos (*strata*) para garantir que o conjunto de teste seja representativo das proporções populacionais.",
+                "Amostrar apenas as instâncias que são *outliers*.",
+                "Garantir que a correlação entre os atributos seja zero."
+            ],
+            "correct_option": 1
+        },
+        {
+            "text": "Qual é a abordagem recomendada (imputação) para lidar com valores ausentes (*missing values*) em um atributo numérico usando Scikit-Learn (e.g., com `SimpleImputer`)?",
+            "options": [
+                "Apagar o atributo (coluna) inteiro.",
+                "Substituir os valores nulos por um valor aleatório.",
+                "Apagar todas as instâncias (linhas) que contêm o valor nulo.",
+                "Calcular uma estatística (e.g., mediana) no conjunto de **treinamento** e usá-la para preencher os valores ausentes."
+            ],
+            "correct_option": 3
+        },
+        {
+            "text": "Por que, no pré-processamento de atributos categóricos não ordenados, a codificação *One-Hot Encoding* é geralmente preferível à codificação numérica natural (Ordinal Encoding)?",
+            "options": [
+                "A Codificação Numérica Natural implica uma relação de ordem ou distância artificial entre categorias não ordenadas.",
+                "One-Hot Encoding usa menos memória.",
+                "One-Hot Encoding é mais rápido para ser calculado.",
+                "Codificação Numérica Natural sempre resulta em *sparsity* (esparsidade)."
             ],
             "correct_option": 0
         },
         {
-            "text": "What is csv",
+            "text": "O Coeficiente de Pearson (ou coeficiente de correlação padrão) mede qual tipo de relação entre dois atributos?",
             "options": [
-                "A type of compressed binary file used for storing machine learning models.",
-                "A secure, encrypted file format for storing sensitive user data.",
-                "Stands for 'Comma-Separated Values'. It is a plain-text file format used to store tabular data, where each line is a row and fields are separated by commas.",
-                "A complex database file format, similar to SQL, used for relational data."
+                "A relação não-linear (curva) entre os atributos.",
+                "A dispersão e a média dos atributos.",
+                "A correlação linear entre os atributos.",
+                "O grau de esparsidade de um vetor."
             ],
             "correct_option": 2
         },
         {
-            "text": "What are instances and labels",
+            "text": "Por que o método *Min-Max scaling* é mais suscetível a ser afetado por *outliers* (valores atípicos) do que a *Standardization* (padronização)?",
             "options": [
-                "An instance is a model algorithm (e.g., an 'instance' of a Random Forest). A label is a type of hyperparameter.",
-                "An instance is a single row of data (an observation or sample). A label is the target value (the 'answer') we are trying to predict, typically in supervised learning.",
-                "An instance is a single feature (a column) in a dataset. A label is the name of that feature.",
-                "Instances and labels are both terms for the input features (the X matrix) used to train a model."
+                "A Standardization não utiliza a média.",
+                "O Min-Max scaling usa valores mínimos e máximos que são sensíveis e distorcidos por *outliers*.",
+                "O Min-Max scaling exige que a distribuição seja Gaussiana.",
+                "A Standardization força os dados para um intervalo fixo."
             ],
             "correct_option": 1
         },
         {
-            "text": "What is std, variance and null values?",
+            "text": "Ao aplicar *feature scaling* (Min-Max ou Standardization), por que os parâmetros do *scaler* (como média, desvio padrão, min e max) devem ser calculados (treinados) **somente** no conjunto de treinamento?",
             "options": [
-                "Std (standard deviation) is the average of the data. Variance is the max value minus the min value. Null values are '0's in the data.",
-                "Std is the most frequent value (mode). Variance is the middle value (median). Null values are corrupted data points.",
-                "Std and variance are both measures of central tendency. Null values are outliers that should be removed.",
-                "Std (standard deviation) is the square root of the variance, both measuring data spread. Null values (or 'missing values', e.g., NaN) are datapoints where no value is present."
-            ],
-            "correct_option": 3
-        },
-        {
-            "text": "25th percentile (or first quartile), 75th percentile (or third quartile).",
-            "options": [
-                "The 25th percentile (Q1) is the value below which 25% of the data falls. The 75th percentile (Q3) is the value below which 75% of the data falls.",
-                "The 25th percentile is the average of the lowest 25% of data. The 75th percentile is the average of the highest 75% of data.",
-                "The 25th percentile is 25% of the maximum value. The 75th percentile is 75% of the maximum value.",
-                "The 25th percentile (Q1) and 75th percentile (Q3) are measures of central tendency, similar to the mean."
-            ],
-            "correct_option": 0
-        },
-        {
-            "text": "What is the Matplotlib backend?",
-            "options": [
-                "The backend is the specific dataset (e.g., CSV, JSON) that Matplotlib is currently plotting.",
-                "The backend is the machine learning model (e.g., 'backend: TensorFlow') that Matplotlib is visualizing.",
-                "The backend is the Python version (e.g., 3.9, 3.10) that Matplotlib is running on.",
-                "The backend is the underlying software or API (e.g., Qt, 'inline' for Jupyter, 'Agg' for saving to files) that Matplotlib uses to actually draw and render the plots."
-            ],
-            "correct_option": 3
-        },
-        {
-            "text": "Why is show() optional in Jupyter but required in a Python script?",
-            "options": [
-                "Jupyter notebooks have a bug where show() crashes the kernel, so it's disabled. Python scripts require it to compile the code.",
-                "Jupyter's 'inline' backend automatically 'shows' the plot at the end of a cell. In a .py script, Matplotlib builds the plot in memory, and show() is an explicit command to open the interactive window and display it.",
-                "Jupyter automatically calls show() on every line of code. Python scripts only call show() if the file is run as the main program.",
-                "show() is only used for saving plots to a file. In Jupyter (which can't save files), it's optional. In a .py script, it's required to save the plot."
-            ],
-            "correct_option": 1
-        },
-        {
-            "text": "What are tail-heavy and bell-shaped distributions",
-            "options": [
-                "A bell-shaped (e.g., Normal) distribution is symmetric. A tail-heavy distribution is always skewed to the left (negative skew).",
-                "A bell-shaped distribution has a very high peak (kurtosis). A tail-heavy distribution is flat (low kurtosis).",
-                "A bell-shaped distribution (e.g., Normal) has thin tails, meaning outliers are rare. A tail-heavy distribution has 'fatter' tails, meaning outliers (extreme values) are more frequent.",
-                "Bell-shaped distributions are for continuous data, while tail-heavy distributions are for discrete (count) data."
+                "O conjunto de teste é pequeno demais para ter estatísticas válidas.",
+                "Apenas dados categóricos precisam de treinamento de *scaler*.",
+                "Para evitar *data leakage* (vazamento de dados) do conjunto de teste para o treinamento.",
+                "O `fit()` deve ser chamado no conjunto de teste e o `transform()` no conjunto de treinamento."
             ],
             "correct_option": 2
         },
         {
-            "text": "What is 'data snooping bias'?",
+            "text": "Qual é a principal vantagem de usar *Randomized Search* (e a classe `RandomizedSearchCV`) em vez de *Grid Search* (`GridSearchCV`) para ajustar hiperparâmetros, especialmente em espaços de busca grandes?",
             "options": [
-                "It occurs when you repeatedly tune your model (e.g., hyperparameters) based on its performance on the *test set*. The model becomes specialized to that specific test set, and its performance on new, unseen data will be worse.",
-                "It is the bias introduced when your test set is much smaller than your training set, making the error estimate unreliable.",
-                "It is when you 'snoop' on the data by visualizing it (e.g., histograms) before training, which biases your choice of model.",
-                "It is an error in the data collection process, where the test set accidentally contains copies of data from the training set."
-            ],
-            "correct_option": 0
-        },
-        {
-            "text": "random number generator’s seed",
-            "options": [
-                "A 'seed' is the final random number that is generated by the algorithm.",
-                "A 'seed' is an initial value used by a pseudo-random number generator. Setting the same seed ensures that the same sequence of 'random' numbers is generated, making results reproducible.",
-                "A 'seed' is a security key used to encrypt the random numbers, making them safe for cryptographic use.",
-                "A 'seed' refers to the specific algorithm (e.g., Mersenne Twister) used to generate random numbers."
+                "Grid Search é mais eficiente para explorar espaços de hiperparâmetros contínuos.",
+                "Randomized Search avalia combinações aleatórias, permitindo explorar espaços vastos de forma mais eficiente do que testar todas as combinações em uma grade (Grid).",
+                "Randomized Search garante o ótimo global em menos tempo.",
+                "Grid Search permite a definição de distribuições de probabilidade para a amostragem."
             ],
             "correct_option": 1
         },
         {
-            "text": "Explain stratified sampling.",
+            "text": "O que são *Ensemble Methods* e qual sua função principal no aprimoramento de modelos de ML?",
             "options": [
-                "It is a sampling method where the entire population is randomly shuffled, and the first N instances are selected.",
-                "It involves sampling the data in 'strata' (batches) over time, which is useful for online learning.",
-                "It's a method where the population is split into subgroups (strata) (e.g., by age, gender). Then, random samples are drawn from *each* subgroup, ensuring the final sample is representative of the population's proportions.",
-                "It is a method where only the most 'stratified' (extreme or outlier) data points are selected for training, to make the model more robust."
+                "Métodos para realizar *feature scaling* em atributos numéricos.",
+                "Métodos que combinam vários modelos (*estimators*) (e.g., *Random Forests*) para obter um desempenho geralmente melhor do que os modelos individuais.",
+                "Uma técnica para remover valores nulos (Imputation).",
+                "Algoritmos de *Unsupervised Learning* (não supervisionados)."
+            ],
+            "correct_option": 1
+        },
+        {
+            "text": "Segundo os princípios de design do Scikit-Learn, o que define um *Transformer* (Transformador)?",
+            "options": [
+                "Qualquer objeto que implementa apenas o método `predict()`.",
+                "Um objeto que pode estimar parâmetros (`fit()`) e transformar um dataset (`transform()`).",
+                "Um objeto que só tem o método `score()`.",
+                "Apenas a etapa final de um *ML pipeline* que faz predições."
+            ],
+            "correct_option": 1
+        },
+        {
+            "text": "Para lidar com atributos numéricos que possuem distribuições *tail-heavy* (caudas pesadas) ou assimétricas, qual tipo de transformação é frequentemente aplicado para aproximá-los de uma distribuição simétrica (*bell-shaped*)?",
+            "options": [
+                "A codificação One-Hot Encoding.",
+                "Transformações não-lineares, como aplicar o logaritmo ou a raiz quadrada.",
+                "O cálculo da correlação de Pearson.",
+                "A remoção de todos os valores acima do 75º percentil."
+            ],
+            "correct_option": 1
+        },
+        {
+            "text": "Qual é a métrica de desempenho de Regressão que é mais sensível a grandes erros (*outliers*), sendo geralmente preferida por penalizar mais as predições distantes?",
+            "options": [
+                "O Mean Absolute Error (MAE).",
+                "O Coeficiente de Pearson.",
+                "O Root Mean Square Error (RMSE).",
+                "A Variância."
             ],
             "correct_option": 2
         },
         {
-            "text": "How to deal with missing (null) values?",
+            "text": "Quando um sistema de ML é implantado (*launch, monitor, and maintain*), por que é crucial monitorar o desempenho do sistema em produção?",
             "options": [
-                "Missing values must always be replaced with the number zero (0) for the model to work.",
-                "The only correct way is to delete any row or column that contains a single missing value.",
-                "Missing values should be ignored; modern ML algorithms are designed to handle 'NaN' (Not a Number) inputs directly.",
-                "Common strategies include: (1) Dropping the rows or columns with missing values, or (2) Imputing the values (e.g., replacing them with the mean, median, or mode)."
+                "Porque o *data snooping bias* reaparece após o lançamento.",
+                "Para garantir que a divisão em treino/teste foi correta.",
+                "Para detectar 'model rot' (decaimento do modelo), no qual o desempenho se degrada devido à evolução dos dados ao longo do tempo.",
+                "Para aplicar *cross-validation* continuamente."
             ],
-            "correct_option": 3
+            "correct_option": 2
         },
         {
-            "text": "RandomizedSearchCV vs GridSearchCV",
+            "text": "O que a Validação Cruzada (*Cross-Validation*) permite ao avaliar um modelo, que o uso de um único conjunto de validação não oferece?",
             "options": [
-                "GridSearchCV is faster because it checks random combinations. RandomizedSearchCV is slower but more thorough because it checks every single combination of hyperparameters.",
-                "GridSearchCV exhaustively checks all possible combinations in a grid. RandomizedSearchCV samples a fixed number of combinations from a statistical distribution, which is much faster and often finds a 'good enough' model, especially with many hyperparameters.",
-                "GridSearchCV is used for regression models, while RandomizedSearchCV is used for classification models.",
-                "RandomizedSearchCV only works on a random subset of the data, while GridSearchCV uses the full dataset."
+                "Evitar a necessidade de *feature scaling*.",
+                "Obter uma estimativa de erro de generalização mais estável e uma estimativa de quão precisa é essa estimativa (e.g., através do std dos *folds*).",
+                "Garantir que o modelo não faça *overfitting* de forma alguma.",
+                "Apenas a média do RMSE, sem o desvio padrão dos resultados."
             ],
             "correct_option": 1
-        },
-        {
-            "text": "What are 'Ensemble Methods' and how do they improve performance?",
-            "options": [
-                "An ensemble method is a single, highly complex model (like a deep neural network) that performs better than multiple simple models.",
-                "They are methods for data preprocessing. They improve performance by 'ensembling' (combining) multiple datasets before training.",
-                "They are a type of unsupervised learning used to group the best models together after training.",
-                "Ensemble methods combine the predictions of several individual models (called 'weak learners') to produce a final prediction that is more accurate and robust than any single model (e.g., Random Forest, Gradient Boosting)."
-            ],
-            "correct_option": 3
         }
     ]
 }
