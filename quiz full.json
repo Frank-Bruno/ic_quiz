@@ -1,0 +1,225 @@
+{
+    "title": "AI and ML Concepts Quiz (Extended)",
+    "questions": [
+        {
+            "text": "NumPy array vs pandas DataFrame",
+            "options": [
+                "A DataFrame has labeled axes (index and columns) and can hold heterogeneous data, while a NumPy array is indexed by integers and is optimized for homogeneous data.",
+                "A NumPy array is a 2D labeled structure, while a DataFrame is an N-dimensional array for numerical data.",
+                "NumPy is a high-level data analysis library, while Pandas is a low-level library for numerical computation.",
+                "DataFrames are faster than NumPy arrays for all mathematical operations."
+            ],
+            "correct_option": 0
+        },
+        {
+            "text": "What is a ML pipeline? Cite two examples of ML pipelines.",
+            "options": [
+                "It's a single algorithm like a neural network. Examples: Logistic Regression and K-Means.",
+                "It's an automated workflow of ML steps. Examples: (1) A text classification pipeline (text cleaning -> vectorization -> model training) and (2) An image processing pipeline (image augmentation -> feature scaling -> CNN training).",
+                "It's a database for storing data. Examples: MySQL and PostgreSQL.",
+                "It's a visualization dashboard. Examples: Tableau and PowerBI."
+            ],
+            "correct_option": 1
+        },
+        {
+            "text": "supervised vs unsupervised",
+            "options": [
+                "Supervised learning is for regression, while unsupervised learning is for classification.",
+                "Supervised learning finds clusters in data, while unsupervised learning predicts a continuous value.",
+                "Supervised learning requires a human to 'supervise' the model as it trains, while unsupervised learning runs completely automatically.",
+                "Supervised learning uses labeled data (input-output pairs) to make predictions, while unsupervised learning finds hidden patterns in unlabeled data."
+            ],
+            "correct_option": 3
+        },
+        {
+            "text": "multiple regression vs univariate regression vs multivariate regression",
+            "options": [
+                "**Univariate** predicts one output from one input. **Multiple** predicts one output from many inputs. **Multivariate** predicts many outputs from many inputs.",
+                "**Univariate** predicts one output from one input. **Multiple** predicts many outputs from one input. **Multivariate** predicts many outputs from many inputs.",
+                "**Univariate** predicts many outputs from one input. **Multiple** predicts one output from many inputs. **Multivariate** predicts one output from one input.",
+                "**Univariate** predicts one output from many inputs. **Multiple** predicts one output from one input. **Multivariate** predicts many outputs from many inputs."
+            ],
+            "correct_option": 0
+        },
+        {
+            "text": "batch learning vs online learning",
+            "options": [
+                "Batch learning trains the model incrementally on single data instances, while online learning trains on the entire dataset at once.",
+                "Batch learning (or offline learning) trains on the entire available dataset at once, while online learning trains incrementally on mini-batches or single instances.",
+                "Batch learning is only suitable for small datasets, while online learning is required for all large datasets.",
+                "Online learning models cannot be updated after initial training, while batch learning models can."
+            ],
+            "correct_option": 1
+        },
+        {
+            "text": "Are all datasets small enough to fit in memory? Which learning method should be used if the dataset does not fit?",
+            "options": [
+                "Yes, all modern datasets fit in memory thanks to compression. Batch learning is always preferred.",
+                "No, many datasets are too large for memory. Batch learning is used in this case by loading chunks of data.",
+                "No, many datasets (e.g., 'big data') do not fit in memory. Online learning is well-suited for this, as it processes data incrementally.",
+                "Yes, datasets are designed to fit in memory. If one doesn't, you must use a more powerful computer, as online learning is only for real-time data."
+            ],
+            "correct_option": 2
+        },
+        {
+            "text": "Distinction between norms vs distances vs loss functions",
+            "options": [
+                "A norm measures distance, a distance is a type of loss function, and a loss function is a norm.",
+                "A norm is a loss function, a distance is a metric, and a loss function is always a norm.",
+                "A norm measures vector magnitude (e.g., L2). A distance measures separation between two points (e.g., Euclidean). A loss function quantifies model error (e.g., MSE), and can be based on a norm or distance.",
+                "A norm, a distance, and a loss function are all synonyms for measuring error in a machine learning model."
+            ],
+            "correct_option": 2
+        },
+        {
+            "text": "Explain how a Jupyter notebook works and differences with a Python script",
+            "options": [
+                "A Jupyter notebook is a single file executed from top to bottom, just like a .py script, but it runs in a web browser.",
+                "A Python script is interactive and allows for rich media (plots, text), while a Jupyter notebook is a plain-text file for non-interactive execution.",
+                "Jupyter notebooks are compiled to machine code, making them faster than .py scripts, which are interpreted.",
+                "A notebook is an interactive environment (web-based) that runs code in a kernel, allowing code, text, and plots in 'cells'. A .py script is a plain-text file typically executed non-interactively from the command line."
+            ],
+            "correct_option": 3
+        },
+        {
+            "text": "What is the tgz file extension. Explain command tar xzf housing.tgz",
+            "options": [
+                ".tgz is a Gzipped Tarball (a compressed archive). The command eXtracts (x) the files from the arZchive (z) specified in the File (f) 'housing.tgz', decompressing it.",
+                ".tgz is a text file. The command 'tar xzf' is a text-editing command to 'eXamine text file' (xtf).",
+                ".tgz is a Gzipped executable. The command 'tar xzf' eXecutes (x) the Zipped File (f).",
+                ".tgz is a video file. The command 'tar xf' eXtracts (x) Zoomed (z) Frames (f) from the video."
+            ],
+            "correct_option": 0
+        },
+        {
+            "text": "What is csv",
+            "options": [
+                "A type of compressed binary file used for storing machine learning models.",
+                "A secure, encrypted file format for storing sensitive user data.",
+                "Stands for 'Comma-Separated Values'. It is a plain-text file format used to store tabular data, where each line is a row and fields are separated by commas.",
+                "A complex database file format, similar to SQL, used for relational data."
+            ],
+            "correct_option": 2
+        },
+        {
+            "text": "What are instances and labels",
+            "options": [
+                "An instance is a model algorithm (e.g., an 'instance' of a Random Forest). A label is a type of hyperparameter.",
+                "An instance is a single row of data (an observation or sample). A label is the target value (the 'answer') we are trying to predict, typically in supervised learning.",
+                "An instance is a single feature (a column) in a dataset. A label is the name of that feature.",
+                "Instances and labels are both terms for the input features (the X matrix) used to train a model."
+            ],
+            "correct_option": 1
+        },
+        {
+            "text": "What is std, variance and null values?",
+            "options": [
+                "Std (standard deviation) is the average of the data. Variance is the max value minus the min value. Null values are '0's in the data.",
+                "Std is the most frequent value (mode). Variance is the middle value (median). Null values are corrupted data points.",
+                "Std and variance are both measures of central tendency. Null values are outliers that should be removed.",
+                "Std (standard deviation) is the square root of the variance, both measuring data spread. Null values (or 'missing values', e.g., NaN) are datapoints where no value is present."
+            ],
+            "correct_option": 3
+        },
+        {
+            "text": "25th percentile (or first quartile), 75th percentile (or third quartile).",
+            "options": [
+                "The 25th percentile (Q1) is the value below which 25% of the data falls. The 75th percentile (Q3) is the value below which 75% of the data falls.",
+                "The 25th percentile is the average of the lowest 25% of data. The 75th percentile is the average of the highest 75% of data.",
+                "The 25th percentile is 25% of the maximum value. The 75th percentile is 75% of the maximum value.",
+                "The 25th percentile (Q1) and 75th percentile (Q3) are measures of central tendency, similar to the mean."
+            ],
+            "correct_option": 0
+        },
+        {
+            "text": "What is the Matplotlib backend?",
+            "options": [
+                "The backend is the specific dataset (e.g., CSV, JSON) that Matplotlib is currently plotting.",
+                "The backend is the machine learning model (e.g., 'backend: TensorFlow') that Matplotlib is visualizing.",
+                "The backend is the Python version (e.g., 3.9, 3.10) that Matplotlib is running on.",
+                "The backend is the underlying software or API (e.g., Qt, 'inline' for Jupyter, 'Agg' for saving to files) that Matplotlib uses to actually draw and render the plots."
+            ],
+            "correct_option": 3
+        },
+        {
+            "text": "Why is show() optional in Jupyter but required in a Python script?",
+            "options": [
+                "Jupyter notebooks have a bug where show() crashes the kernel, so it's disabled. Python scripts require it to compile the code.",
+                "Jupyter's 'inline' backend automatically 'shows' the plot at the end of a cell. In a .py script, Matplotlib builds the plot in memory, and show() is an explicit command to open the interactive window and display it.",
+                "Jupyter automatically calls show() on every line of code. Python scripts only call show() if the file is run as the main program.",
+                "show() is only used for saving plots to a file. In Jupyter (which can't save files), it's optional. In a .py script, it's required to save the plot."
+            ],
+            "correct_option": 1
+        },
+        {
+            "text": "What are tail-heavy and bell-shaped distributions",
+            "options": [
+                "A bell-shaped (e.g., Normal) distribution is symmetric. A tail-heavy distribution is always skewed to the left (negative skew).",
+                "A bell-shaped distribution has a very high peak (kurtosis). A tail-heavy distribution is flat (low kurtosis).",
+                "A bell-shaped distribution (e.g., Normal) has thin tails, meaning outliers are rare. A tail-heavy distribution has 'fatter' tails, meaning outliers (extreme values) are more frequent.",
+                "Bell-shaped distributions are for continuous data, while tail-heavy distributions are for discrete (count) data."
+            ],
+            "correct_option": 2
+        },
+        {
+            "text": "What is 'data snooping bias'?",
+            "options": [
+                "It occurs when you repeatedly tune your model (e.g., hyperparameters) based on its performance on the *test set*. The model becomes specialized to that specific test set, and its performance on new, unseen data will be worse.",
+                "It is the bias introduced when your test set is much smaller than your training set, making the error estimate unreliable.",
+                "It is when you 'snoop' on the data by visualizing it (e.g., histograms) before training, which biases your choice of model.",
+                "It is an error in the data collection process, where the test set accidentally contains copies of data from the training set."
+            ],
+            "correct_option": 0
+        },
+        {
+            "text": "random number generator’s seed",
+            "options": [
+                "A 'seed' is the final random number that is generated by the algorithm.",
+                "A 'seed' is an initial value used by a pseudo-random number generator. Setting the same seed ensures that the same sequence of 'random' numbers is generated, making results reproducible.",
+                "A 'seed' is a security key used to encrypt the random numbers, making them safe for cryptographic use.",
+                "A 'seed' refers to the specific algorithm (e.g., Mersenne Twister) used to generate random numbers."
+            ],
+            "correct_option": 1
+        },
+        {
+            "text": "Explain stratified sampling.",
+            "options": [
+                "It is a sampling method where the entire population is randomly shuffled, and the first N instances are selected.",
+                "It involves sampling the data in 'strata' (batches) over time, which is useful for online learning.",
+                "It's a method where the population is split into subgroups (strata) (e.g., by age, gender). Then, random samples are drawn from *each* subgroup, ensuring the final sample is representative of the population's proportions.",
+                "It is a method where only the most 'stratified' (extreme or outlier) data points are selected for training, to make the model more robust."
+            ],
+            "correct_option": 2
+        },
+        {
+            "text": "How to deal with missing (null) values?",
+            "options": [
+                "Missing values must always be replaced with the number zero (0) for the model to work.",
+                "The only correct way is to delete any row or column that contains a single missing value.",
+                "Missing values should be ignored; modern ML algorithms are designed to handle 'NaN' (Not a Number) inputs directly.",
+                "Common strategies include: (1) Dropping the rows or columns with missing values, or (2) Imputing the values (e.g., replacing them with the mean, median, or mode)."
+            ],
+            "correct_option": 3
+        },
+        {
+            "text": "RandomizedSearchCV vs GridSearchCV",
+            "options": [
+                "GridSearchCV is faster because it checks random combinations. RandomizedSearchCV is slower but more thorough because it checks every single combination of hyperparameters.",
+                "GridSearchCV exhaustively checks all possible combinations in a grid. RandomizedSearchCV samples a fixed number of combinations from a statistical distribution, which is much faster and often finds a 'good enough' model, especially with many hyperparameters.",
+                "GridSearchCV is used for regression models, while RandomizedSearchCV is used for classification models.",
+                "RandomizedSearchCV only works on a random subset of the data, while GridSearchCV uses the full dataset."
+            ],
+            "correct_option": 1
+        },
+        {
+            "text": "What are 'Ensemble Methods' and how do they improve performance?",
+            "options": [
+                "An ensemble method is a single, highly complex model (like a deep neural network) that performs better than multiple simple models.",
+                "They are methods for data preprocessing. They improve performance by 'ensembling' (combining) multiple datasets before training.",
+                "They are a type of unsupervised learning used to group the best models together after training.",
+                "Ensemble methods combine the predictions of several individual models (called 'weak learners') to produce a final prediction that is more accurate and robust than any single model (e.g., Random Forest, Gradient Boosting)."
+            ],
+            "correct_option": 3
+        }
+    ]
+}

@@ -72,26 +72,25 @@
         questionTextEl.textContent = data.text;
         optionsGrid.innerHTML = '';
 
+        const letters = ['A', 'B', 'C', 'D'];
+
         data.options.forEach((option, index) => {
             const btn = document.createElement('button');
-            btn.textContent = option;
+            btn.textContent = letters[index] || '?'; // mostra só A, B, C, D
             btn.classList.add('option-btn');
             btn.dataset.index = index;
 
             btn.addEventListener('click', () => {
-                // Envia a resposta
                 socket.emit('submit_answer', { 'option_index': index });
+                myLastAnswerIndex = index.toString();
 
-                // --- ALTERAÇÃO AQUI ---
-                myLastAnswerIndex = index.toString(); // Salva a resposta clicada
-
-                // Desabilita todos os botões e marca a selecionada
                 optionsGrid.querySelectorAll('button').forEach(b => b.disabled = true);
                 btn.style.backgroundColor = '#007bff';
                 btn.style.color = 'white';
             });
             optionsGrid.appendChild(btn);
         });
+
     });
 
     // Servidor confirmou o recebimento da resposta

@@ -1,0 +1,25 @@
+{
+    "title": "AI and ML Concepts Quiz (Extended)",
+    "questions": [
+        {
+            "text": "NumPy array vs pandas DataFrame",
+            "options": [
+                "A DataFrame has labeled axes (index and columns) and can hold heterogeneous data, while a NumPy array is indexed by integers and is optimized for homogeneous data.",
+                "A NumPy array is a 2D labeled structure, while a DataFrame is an N-dimensional array for numerical data.",
+                "NumPy is a high-level data analysis library, while Pandas is a low-level library for numerical computation.",
+                "DataFrames are faster than NumPy arrays for all mathematical operations."
+            ],
+            "correct_option": 0
+        },
+        {
+            "text": "What is a ML pipeline? Cite two examples of ML pipelines.",
+            "options": [
+                "It's a single algorithm like a neural network. Examples: Logistic Regression and K-Means.",
+                "It's an automated workflow of ML steps. Examples: (1) A text classification pipeline (text cleaning -> vectorization -> model training) and (2) An image processing pipeline (image augmentation -> feature scaling -> CNN training).",
+                "It's a database for storing data. Examples: MySQL and PostgreSQL.",
+                "It's a visualization dashboard. Examples: Tableau and PowerBI."
+            ],
+            "correct_option": 1
+        }
+    ]
+}

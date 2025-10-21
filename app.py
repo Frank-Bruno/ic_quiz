@@ -3,6 +3,29 @@ from flask import Flask, render_template, request, session
 from flask_socketio import SocketIO, emit, join_room, leave_room
 import json
 
+import csv
+from datetime import datetime
+import os
+
+import matplotlib
+matplotlib.use('Agg')  # Usa backend sem janela (necessário no servidor)
+import matplotlib.pyplot as plt
+
+def export_scores_to_csv(scores, players):
+    """Exporta os resultados do quiz para um arquivo CSV local."""
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    filename = f"scores_{timestamp}.csv"
+    filepath = os.path.join(os.path.dirname(__file__), filename)
+
+    with open(filepath, 'w', newline='', encoding='utf-8') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(['Jogador', 'Pontuação'])
+        for sid, score in scores.items():
+            writer.writerow([players.get(sid, 'Desconhecido'), score])
+
+    print(f"✅ Resultados exportados para {filename}")
+
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'seu-segredo-super-secreto!'
 socketio = SocketIO(app)
@@ -129,6 +152,8 @@ def on_next_question():
         
     advance_question()
 
+
+
 def advance_question():
     """Função interna para avançar para a próxima pergunta."""
     game_state['answers'] = {} # Limpa as respostas anteriores
@@ -142,14 +167,17 @@ def advance_question():
         for sid, nickname in game_state['players'].items():
             leaderboard.append({
                 'nickname': nickname,
-                'score': game_state['scores'].get(sid, 0) # Pega o score, ou 0 se não houver
+                'score': game_state['scores'].get(sid, 0)
             })
-            
-        # Ordena o placar (do maior para o menor score)
+                
         leaderboard.sort(key=lambda x: x['score'], reverse=True)
-        
-        # Envia o placar final ordenado
+
+        # 🔽 Exporta os resultados automaticamente ao final
+        export_scores_to_csv(game_state['scores'], game_state['players'])
+
+        # 🔽 Envia o placar final para todos
         emit('game_over', leaderboard, broadcast=True)
+
     else:
         # Prepara e envia a próxima pergunta
         question_data = QUIZ_DATA['questions'][q_index]
@@ -189,9 +217,27 @@ def on_submit_answer(data):
             'total': len(game_state['players'])
         }, to=game_state['host_sid'])
 
+# --- Gera o gráfico de barras com matplotlib ---
+def save_answer_distribution_chart(answer_distribution, question_data, question_index):
+    os.makedirs('static/graphs', exist_ok=True)
+    labels = ['A', 'B', 'C', 'D'][:len(answer_distribution)]
+    values = answer_distribution
+
+    plt.figure(figsize=(5,3))
+    plt.bar(labels, values, color=['#007bff', '#28a745', '#ffc107', '#dc3545'][:len(values)])
+    plt.title(f"Distribuição das respostas - Pergunta {question_index + 1}")
+    plt.xlabel("Alternativas")
+    plt.ylabel("Número de respostas")
+    plt.tight_layout()
+
+    filename = f"static/graphs/q{question_index + 1}_results.png"
+    plt.savefig(filename)
+    plt.close()
+    return filename
+
+
 @socketio.on('show_results')
 def on_show_results():
-    """Host clicou para mostrar os resultados da pergunta atual."""
     if request.sid != game_state['host_sid']:
         return
 
@@ -201,31 +247,36 @@ def on_show_results():
         
     question_data = QUIZ_DATA['questions'][q_index]
     correct_option_index = question_data['correct_option']
-    
-    # Pega o TEXTO da resposta correta usando o índice
     correct_option_text = question_data['options'][correct_option_index] 
-    
-    results = {} # {sid: True/False}
-    
-    # Calcula pontuação
+
+    # --- NOVO: contar respostas por alternativa ---
+    answer_distribution = [0] * len(question_data['options'])
+    for ans in game_state['answers'].values():
+        try:
+            answer_distribution[int(ans)] += 1
+        except (ValueError, TypeError, IndexError):
+            pass
+    # ----------------------------------------------
+
+    # Calcular pontuação
     for sid, answer in game_state['answers'].items():
         try:
-            is_correct = (int(answer) == int(correct_option_index))
-        except (ValueError, TypeError):
-            is_correct = False
-        
-        results[sid] = is_correct
-        if is_correct:
-            game_state['scores'][sid] = game_state['scores'].get(sid, 0) + 10 # 10 pontos por acerto
-            
-    # Prepara o payload de resultados para todos
+            if int(answer) == int(correct_option_index):
+                game_state['scores'][sid] = game_state['scores'].get(sid, 0) + 10
+        except:
+            pass
+
+    chart_path = save_answer_distribution_chart(answer_distribution, question_data,q_index)
+
     payload = {
-        'correct_option': correct_option_index,
-        'correct_option_text': correct_option_text, # <-- LINHA NOVA (Envia o texto)
-        'scores': game_state['scores'],
-        'players': game_state['players']
+    'correct_option': correct_option_index,
+    'correct_option_text': correct_option_text,
+    'scores': game_state['scores'],
+    'players': game_state['players'],
+    'answer_distribution': answer_distribution,
+    'chart_path': chart_path  # <-- adiciona o caminho da imagem
     }
-    
+
     emit('show_results', payload, broadcast=True)
     print("Mostrando resultados.")
 
