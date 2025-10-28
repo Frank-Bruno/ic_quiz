@@ -11,12 +11,14 @@
     </ul>
 
     <button id="start-game-btn" disabled>Iniciar Jogo (0 Jogadores)</button>
+    <button id="force-end-btn" style="display: none; background-color: #dc3545; margin-top: 10px;">Finalizar Quiz</button>
 </div>
 
 <div id="question-view" style="display: none;">
     <h3 id="question-text">Texto da Pergunta</h3>
     <p>Respostas recebidas: <span id="answer-count">0</span> / <span id="total-players">0</span></p>
     <button id="show-results-btn">Mostrar Resultados</button>
+    <button id="force-end-question-btn" style="display: none; background-color: #dc3545; margin-left: 10px;">Finalizar Quiz</button>
 </div>
 
 <div id="results-view" style="display: none;">
@@ -24,6 +26,7 @@
     <img id="results-chart" src="" alt="Gráfico das respostas" style="max-width: 500px;">
     <p>A resposta correta era: <strong id="correct-answer-text"></strong></p>
     <button id="next-question-btn">Próxima Pergunta</button>
+    <button id="force-end-results-btn" style="background-color: #dc3545; margin-left: 10px;">Finalizar Quiz</button>
 </div>
 
 
@@ -40,6 +43,11 @@
 <script>
     const startBtn = document.getElementById('start-game-btn');
     const playerListEl = document.getElementById('player-list');
+
+    const forceEndBtn = document.getElementById('force-end-btn');
+    const forceEndQuestionBtn = document.getElementById('force-end-question-btn');
+    const forceEndResultsBtn = document.getElementById('force-end-results-btn');
+
 
     const lobbyView = document.getElementById('lobby');
     const questionView = document.getElementById('question-view');
@@ -67,7 +75,22 @@
         });
         startBtn.textContent = `Iniciar Jogo (${players.length} Jogadores)`;
         startBtn.disabled = players.length === 0;
+
+        forceEndBtn.style.display = players.length > 0 ? 'block' : 'none';
+
     });
+
+    // Função para finalizar o quiz
+    function forceEndQuiz() {
+        if (confirm('Tem certeza que deseja finalizar o quiz? Isso mostrará o placar final imediatamente.')) {
+            socket.emit('force_end_quiz');
+        }
+    }
+
+    // Event listeners para os botões de finalizar
+    forceEndBtn.addEventListener('click', forceEndQuiz);
+    forceEndQuestionBtn.addEventListener('click', forceEndQuiz);
+    forceEndResultsBtn.addEventListener('click', forceEndQuiz);
 
     // Iniciar Jogo
     startBtn.addEventListener('click', () => {
@@ -135,6 +158,7 @@
 socket.on('game_over', (leaderboard) => { // Recebe o placar ordenado (decrescente)
     resultsView.style.display = 'none';
     gameOverView.style.display = 'block';
+    forceEndBtn.style.display = 'none'; // Esconde o botão no lobby
 
     finalScoreListEl.innerHTML = '';
 
@@ -202,7 +226,7 @@ let answersChart = null;
 socket.on('show_results', (data) => {
     questionView.style.display = 'none';
     resultsView.style.display = 'block';
-    correctTextEl.textContent = data.correct_option_text;
+    correctTextEl.textContent = data.correct_option_letter;
 
     const labels = data.players ? ['A', 'B', 'C', 'D'].slice(0, data.answer_distribution.length) : [];
     const values = data.answer_distribution;

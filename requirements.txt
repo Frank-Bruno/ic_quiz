@@ -1,3 +1,4 @@
-Flask
-Flask-SocketIO
-matplotlib
+eventlet==0.40.3
+Flask==3.1.2
+Flask_SocketIO==5.5.1
+matplotlib==3.10.7

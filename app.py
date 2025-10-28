@@ -28,7 +28,15 @@ def export_scores_to_csv(scores, players):
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'seu-segredo-super-secreto!'
-socketio = SocketIO(app)
+socketio = SocketIO(
+    app,
+    async_mode='eventlet',  # FORÇA usar eventlet
+    logger=False,           # Desativa logs em produção
+    engineio_logger=False,  # Desativa logs do engineio
+    ping_timeout=60,
+    ping_interval=25,
+    max_http_buffer_size=1e7  # 10MB
+)
 
 # --- Nosso "Banco de Dados" de Perguntas ---
 def load_quiz_data(filename='quiz.json'):
@@ -100,9 +108,7 @@ def on_disconnect():
         game_state.update(host_sid=None, players={}, current_question=-1, answers={}, scores={})
         emit('game_reset', broadcast=True)
     elif request.sid in game_state['players']:
-        nickname = game_state['players'].pop(request.sid, '??')
-        game_state['scores'].pop(request.sid, None)
-        game_state['answers'].pop(request.sid, None)
+        nickname = game_state['players'].get(request.sid, '??')
         
         # Avisa o host que o jogador saiu
         if game_state['host_sid']:
@@ -270,7 +276,7 @@ def on_show_results():
 
     payload = {
     'correct_option': correct_option_index,
-    'correct_option_text': correct_option_text,
+    'correct_option_text': chr(ord('A')+correct_option_index) + ') ' + correct_option_text,
     'scores': game_state['scores'],
     'players': game_state['players'],
     'answer_distribution': answer_distribution,
@@ -279,6 +285,34 @@ def on_show_results():
 
     emit('show_results', payload, broadcast=True)
     print("Mostrando resultados.")
+
+@socketio.on('force_end_quiz')
+def on_force_end_quiz():
+    """Host forçou o fim do quiz."""
+    if request.sid != game_state['host_sid']:
+        return  # Só o host pode forçar o fim
+
+    print("Quiz finalizado forçadamente pelo host")
+    
+    # Calcula o placar final
+    leaderboard = []
+    for sid, nickname in game_state['players'].items():
+        leaderboard.append({
+            'nickname': nickname,
+            'score': game_state['scores'].get(sid, 0)
+        })
+            
+    leaderboard.sort(key=lambda x: x['score'], reverse=True)
+
+    # Exporta os resultados
+    export_scores_to_csv(game_state['scores'], game_state['players'])
+
+    # Envia o placar final para todos
+    emit('game_over', leaderboard, broadcast=True)
+    
+    # Reseta o estado do jogo para evitar conflitos
+    game_state['current_question'] = -1
+    game_state['answers'] = {}
 
 
 if __name__ == '__main__':
