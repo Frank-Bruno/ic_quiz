@@ -226,7 +226,7 @@ let answersChart = null;
 socket.on('show_results', (data) => {
     questionView.style.display = 'none';
     resultsView.style.display = 'block';
-    correctTextEl.textContent = data.correct_option_letter;
+    correctTextEl.textContent = data.correct_option_text;
 
     const labels = data.players ? ['A', 'B', 'C', 'D'].slice(0, data.answer_distribution.length) : [];
     const values = data.answer_distribution;

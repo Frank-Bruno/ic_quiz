@@ -4,6 +4,9 @@ import threading
 import time
 import random
 
+ip = "192.168.1.106"
+
+
 def test_player_connection(user_id):
     """Testa conexão Socket.IO com event handlers corrigidos"""
     try:
@@ -70,7 +73,7 @@ def test_player_connection(user_id):
         
         # Conecta ao servidor
         print(f"🔗 Usuário {user_id}: Conectando...")
-        sio.connect('http://localhost:5000', wait_timeout=10)
+        sio.connect(f'http://{ip}:5000', wait_timeout=10)
         
         # Aguarda um pouco para ver se o login foi bem-sucedido
         time.sleep(2)
@@ -108,7 +111,7 @@ def test_simple_connection(user_id):
         def on_join_success(data):
             print(f"✅ {user_id}: Login confirmado")
         
-        sio.connect('http://localhost:5000', wait_timeout=10)
+        sio.connect(f'http://{ip}:5000', wait_timeout=10)
         print(f"✅ {user_id}: Handshake OK")
         
         # Mantém por 20 segundos
